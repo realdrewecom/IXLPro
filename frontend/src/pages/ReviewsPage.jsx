@@ -3,11 +3,23 @@ import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+// More diverse avatar collection
 const AVATARS = [
-  "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85&w=100",
-  "https://images.unsplash.com/photo-1569913486515-b74bf7751574?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85&w=100",
-  "https://images.unsplash.com/photo-1520283818086-3f6dffb019c0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85&w=100",
-  "https://images.pexels.com/photos/2233508/pexels-photo-2233508.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100&w=100",
+  "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1569913486515-b74bf7751574?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1520283818086-3f6dffb019c0?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
 ];
 
 const reviewsData = [
@@ -51,7 +63,7 @@ const reviewsData = [
   {
     id: 5,
     username: "mathking2025",
-    avatar: AVATARS[0],
+    avatar: AVATARS[4],
     timestamp: "1/25/2026, 3:45:12 PM",
     message: "Finally something that actually works! IXLPro saved my semester. The auto-answers feature is incredibly accurate and the stealth mode is perfect for when teachers are watching.",
     helpful: 12,
@@ -60,7 +72,7 @@ const reviewsData = [
   {
     id: 6,
     username: "studyhard_99",
-    avatar: AVATARS[1],
+    avatar: AVATARS[5],
     timestamp: "1/20/2026, 8:22:18 AM",
     message: "Been using for 2 months now. Went from failing to straight A's. The AI answers for essays are actually really good quality. Worth every penny!",
     helpful: 8,
@@ -69,7 +81,7 @@ const reviewsData = [
   {
     id: 7,
     username: "gradmaster",
-    avatar: AVATARS[2],
+    avatar: AVATARS[6],
     timestamp: "1/15/2026, 11:55:30 PM",
     message: "This tool is insane. Completed an entire semester of IXL in 3 days. Support team on Discord is super helpful too. 10/10 would recommend.",
     helpful: 15,
@@ -78,11 +90,74 @@ const reviewsData = [
   {
     id: 8,
     username: "nightowl_student",
-    avatar: AVATARS[3],
+    avatar: AVATARS[7],
     timestamp: "1/10/2026, 2:14:45 AM",
     message: "Running this overnight and waking up to completed assignments is the best feeling. Anti-logout feature is clutch. Already recommended to all my friends.",
     helpful: 5,
     color: "text-red-400",
+  },
+  {
+    id: 9,
+    username: "valedictorian2026",
+    avatar: AVATARS[8],
+    timestamp: "1/22/2026, 5:30:12 PM",
+    message: "Don't know how I would have survived AP classes without this. The AI answers feature is genuinely impressive. Worth every penny for the peace of mind.",
+    helpful: 11,
+    color: "text-emerald-400",
+  },
+  {
+    id: 10,
+    username: "lazy_genius",
+    avatar: AVATARS[9],
+    timestamp: "12/29/2025, 11:45:00 PM",
+    message: "Finally a tool that actually works. Tried so many other scripts but IXLPro is the only one that's reliable and fast. Customer support is A1 too",
+    helpful: 6,
+    color: "text-amber-400",
+  },
+  {
+    id: 11,
+    username: "creditrecovery_king",
+    avatar: AVATARS[10],
+    timestamp: "2/1/2026, 7:12:33 PM",
+    message: "Was 47 credits behind and about to get kicked out. Used IXLPro for 2 weeks straight and caught up completely. This is literally the GOAT of school tools.",
+    helpful: 18,
+    color: "text-indigo-400",
+  },
+  {
+    id: 12,
+    username: "senioritis_survivor",
+    avatar: AVATARS[11],
+    timestamp: "1/28/2026, 4:20:00 PM",
+    message: "Senioritis hit hard but IXLPro hit harder. Finished all my IXL courses with minimal effort. Highly recommend the month key if you're serious about catching up.",
+    helpful: 9,
+    color: "text-rose-400",
+  },
+  {
+    id: 13,
+    username: "4.0_gpa_incoming",
+    avatar: AVATARS[12],
+    timestamp: "1/30/2026, 10:30:15 AM",
+    message: "The Brainly unlocker alone is worth it. Plus the auto-answers work perfectly. My grades have never been better and I actually have time for a social life now.",
+    helpful: 7,
+    color: "text-violet-400",
+  },
+  {
+    id: 14,
+    username: "procrastinator_pro",
+    avatar: AVATARS[13],
+    timestamp: "2/3/2026, 11:59:59 PM",
+    message: "Had 50 assignments due at midnight. IXLPro got them all done with 3 minutes to spare. This tool is essential for last-minute warriors like me lol",
+    helpful: 14,
+    color: "text-teal-400",
+  },
+  {
+    id: 15,
+    username: "honor_roll_incoming",
+    avatar: AVATARS[14],
+    timestamp: "1/18/2026, 6:45:22 AM",
+    message: "From a 2.1 GPA to honor roll in one semester. IXLPro + actually studying for tests = unstoppable combo. Thanks for making such an amazing tool!",
+    helpful: 10,
+    color: "text-lime-400",
   },
 ];
 

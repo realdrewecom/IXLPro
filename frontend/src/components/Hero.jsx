@@ -1,10 +1,91 @@
 import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MessageSquare, Star, Users } from "lucide-react";
 import InteractiveMenu from "./InteractiveMenu";
 
-// Counter animation component
+// Typing phrases for animation
+const typingPhrases = [
+  "Smarter studying starts with",
+  "Ace every quiz with",
+  "Complete courses faster with",
+  "Auto-answer questions with",
+  "Skip the grind with",
+  "Graduate on time with",
+  "Beat any deadline with",
+];
+
+// Animated typing component
+const TypewriterText = () => {
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    const phrase = typingPhrases[currentPhraseIndex];
+    
+    if (isTyping) {
+      if (displayedText.length < phrase.length) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(phrase.slice(0, displayedText.length + 1));
+        }, 30); // Fast typing speed
+        return () => clearTimeout(timeout);
+      } else {
+        // Finished typing, wait 4 seconds then switch
+        const timeout = setTimeout(() => {
+          setIsTyping(false);
+        }, 4000);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      // Clear and move to next phrase
+      setDisplayedText("");
+      setCurrentPhraseIndex((prev) => (prev + 1) % typingPhrases.length);
+      setIsTyping(true);
+    }
+  }, [displayedText, isTyping, currentPhraseIndex]);
+
+  return (
+    <span className="inline-block min-w-[280px] sm:min-w-[400px]">
+      {displayedText}
+      <span className="animate-pulse text-blue-400">|</span>
+    </span>
+  );
+};
+
+// Live counter component for questions answered
+const LiveCounter = ({ baseValue }) => {
+  const [count, setCount] = useState(baseValue);
+  const [displayMillions, setDisplayMillions] = useState(Math.floor(baseValue / 1000000));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const increment = Math.floor(Math.random() * 7) + 7; // Random 7-13
+      setCount((prev) => {
+        const newCount = prev + increment;
+        const newMillions = Math.floor(newCount / 1000000);
+        if (newMillions > displayMillions) {
+          setDisplayMillions(newMillions);
+        }
+        return newCount;
+      });
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [displayMillions]);
+
+  return (
+    <div>
+      <span className="text-3xl md:text-4xl font-bold text-white" style={{ fontFamily: 'Outfit, sans-serif' }}>
+        {displayMillions}M+
+      </span>
+      <p className="text-sm text-zinc-500 mt-1">Questions Answered</p>
+      <p className="text-xs text-zinc-600">({count.toLocaleString()})</p>
+    </div>
+  );
+};
+
+// Counter animation component for other stats
 const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const countRef = useRef(null);
@@ -38,9 +119,7 @@ const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
   }, [end, duration, hasAnimated]);
 
   const formatNumber = (num) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(0) + "M+";
-    } else if (num >= 1000) {
+    if (num >= 1000) {
       return num.toLocaleString();
     }
     return num.toString();
@@ -100,8 +179,14 @@ const Hero = ({ stats }) => {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
-              Smarter studying starts with{" "}
-              <span className="text-gradient">IXLPro</span>
+              <TypewriterText />{" "}
+              <motion.span 
+                className="text-gradient inline-block"
+                layout
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                IXLPro
+              </motion.span>
             </motion.h1>
 
             <motion.p
@@ -157,9 +242,7 @@ const Hero = ({ stats }) => {
                 <svg className="w-6 h-6 text-blue-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <AnimatedCounter end={stats.questions_answered} suffix="+" />
-                <p className="text-sm text-zinc-500 mt-1">Questions Answered</p>
-                <p className="text-xs text-zinc-600">({stats.questions_answered.toLocaleString()})</p>
+                <LiveCounter baseValue={stats.questions_answered} />
               </div>
               <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 text-center card-hover">
                 <svg className="w-6 h-6 text-blue-400 mx-auto mb-2" viewBox="0 0 24 24" fill="currentColor">

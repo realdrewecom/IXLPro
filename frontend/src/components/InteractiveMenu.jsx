@@ -1,30 +1,183 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { 
-  Zap, Clock, Brain, FileText, Book, Beaker, Shield, Search, 
-  Unlock, MessageSquare, Image, Webhook, Eye, Globe, Settings,
-  SkipForward, Sun, EyeOff, PanelLeftClose, Home, User, ChevronRight
+  Zap, Clock, Brain, FileText, Shield, MessageSquare, Image, 
+  Webhook, Sun, Settings, Home, User, Globe, ChevronDown
 } from "lucide-react";
 
+// Features with settings panels - only those shown in the screenshots have gear icons
 const menuFeatures = [
-  { id: "auto-advance", name: "Auto Advance", icon: Zap, enabled: true },
-  { id: "auto-advance-delay", name: "Auto Advance Delay", icon: Clock, enabled: false },
-  { id: "auto-submit-delay", name: "Auto Submit Delay", icon: Clock, enabled: false },
-  { id: "auto-answers", name: "Auto Answers", icon: Brain, enabled: true },
-  { id: "auto-assignment", name: "Auto Assignment", icon: FileText, enabled: false },
-  { id: "auto-instruction", name: "Auto Instruction", icon: Settings, enabled: false },
-  { id: "auto-vocab", name: "Auto Vocab", icon: Book, enabled: false },
-  { id: "auto-virtual-lab", name: "Auto Virtual Lab", icon: Beaker, enabled: false },
-  { id: "anti-logout", name: "Anti Logout", icon: Shield, enabled: true },
+  { 
+    id: "auto-advance", 
+    name: "Auto Advance", 
+    icon: Zap, 
+    enabled: true,
+    hasSettings: true,
+    settings: {
+      "Auto Advance Mode": { type: "dropdown", value: "Next Activity", options: ["Next Activity", "Coursemap Mode"] },
+      "Take Notes": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED"] }
+    }
+  },
+  { 
+    id: "auto-advance-delay", 
+    name: "Auto Advance Delay", 
+    icon: Clock, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Advance Delay": { type: "range", min: 1, max: 300, minValue: 1, maxValue: 1, unit: "sec" }
+    }
+  },
+  { 
+    id: "auto-submit-delay", 
+    name: "Auto Submit Delay", 
+    icon: Clock, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Quiz Delay (10-25 Questions)": { type: "range", min: 1, max: 60, minValue: 1, maxValue: 1, unit: "min" }
+    }
+  },
+  { 
+    id: "auto-answers", 
+    name: "Auto Answers", 
+    icon: Brain, 
+    enabled: true,
+    hasSettings: true,
+    settings: {
+      "Grade Range": { type: "range", min: 0, max: 100, minValue: 100, maxValue: 100, unit: "%" },
+      "Auto Answers Mode": { type: "dropdown", value: "Default", options: ["Default", "Stealth"] },
+      "Guess Unknown Questions": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED"] }
+    }
+  },
+  { 
+    id: "auto-assignment", 
+    name: "Auto Assignment", 
+    icon: FileText, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Guess Unknown Questions": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED"] }
+    }
+  },
+  { 
+    id: "anti-logout", 
+    name: "Anti Logout", 
+    icon: Shield, 
+    enabled: true,
+    hasSettings: true,
+    settings: {
+      "Refresh Page on AFK": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED"] }
+    }
+  },
+  { 
+    id: "ai-answers", 
+    name: "AI Answers", 
+    icon: MessageSquare, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "AI Response Type": { type: "dropdown", value: "Default (AI)", options: ["Default (AI)", "Humanized"] },
+      "\"Ask AI\" Button": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED"] }
+    }
+  },
+  { 
+    id: "custom-background", 
+    name: "Custom Background", 
+    icon: Image, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Image Address (URL)": { type: "input", placeholder: "Image URL" }
+    }
+  },
+  { 
+    id: "discord-logging", 
+    name: "Discord Logging", 
+    icon: Webhook, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Discord Webhook (URL)": { type: "input", placeholder: "Webhook URL" },
+      "Discord User ID": { type: "input", placeholder: "Discord User ID" },
+      "Mention User on Log": { type: "dropdown", value: "DISABLED", options: ["DISABLED", "ENABLED", "Only Important"] }
+    }
+  },
+  { 
+    id: "video-brightness", 
+    name: "Video Brightness", 
+    icon: Sun, 
+    enabled: false,
+    hasSettings: true,
+    settings: {
+      "Brightness (%)": { type: "input", placeholder: "99%" }
+    }
+  },
 ];
+
+const SettingsPanel = ({ feature, onClose }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.2 }}
+      className="bg-zinc-800/80 rounded-lg mt-2 overflow-hidden"
+    >
+      <div className="p-3 space-y-3">
+        {Object.entries(feature.settings).map(([label, config], index) => (
+          <div key={index}>
+            <label className="text-xs text-zinc-400 mb-1 block">{label}</label>
+            {config.type === "dropdown" && (
+              <div className="relative">
+                <select 
+                  className="w-full bg-zinc-700 text-white text-sm rounded px-3 py-2 appearance-none cursor-pointer"
+                  defaultValue={config.value}
+                >
+                  {config.options.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+              </div>
+            )}
+            {config.type === "range" && (
+              <div className="flex items-center space-x-2">
+                <input 
+                  type="text" 
+                  defaultValue={`${config.minValue} ${config.unit}`}
+                  className="w-20 bg-zinc-700 text-white text-sm rounded px-2 py-1 text-center"
+                />
+                <span className="text-zinc-500 text-sm">to</span>
+                <input 
+                  type="text" 
+                  defaultValue={`${config.maxValue} ${config.unit}`}
+                  className="w-20 bg-zinc-700 text-white text-sm rounded px-2 py-1 text-center"
+                />
+              </div>
+            )}
+            {config.type === "input" && (
+              <input 
+                type="text" 
+                placeholder={config.placeholder}
+                className="w-full bg-zinc-700 text-white text-sm rounded px-3 py-2 placeholder-zinc-500"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
 
 const InteractiveMenu = () => {
   const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+  const [rotateY, setRotateY] = useState(-12); // Start tilted to the left
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const [features, setFeatures] = useState(menuFeatures);
+  const [expandedSettings, setExpandedSettings] = useState(null);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -33,8 +186,9 @@ const InteractiveMenu = () => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateXVal = ((y - centerY) / centerY) * -15;
-    const rotateYVal = ((x - centerX) / centerX) * 15;
+    // Reduced sensitivity and offset to keep it tilted left
+    const rotateXVal = ((y - centerY) / centerY) * -8;
+    const rotateYVal = ((x - centerX) / centerX) * 10 - 6; // Offset to stay tilted left
     
     setRotateX(rotateXVal);
     setRotateY(rotateYVal);
@@ -42,7 +196,7 @@ const InteractiveMenu = () => {
 
   const handleMouseLeave = () => {
     setRotateX(0);
-    setRotateY(0);
+    setRotateY(-12); // Return to tilted left position
     setIsHovered(false);
   };
 
@@ -54,6 +208,11 @@ const InteractiveMenu = () => {
     setFeatures(features.map(f => 
       f.id === featureId ? { ...f, enabled: !f.enabled } : f
     ));
+  };
+
+  const toggleSettings = (featureId, e) => {
+    e.stopPropagation();
+    setExpandedSettings(expandedSettings === featureId ? null : featureId);
   };
 
   return (
@@ -83,75 +242,96 @@ const InteractiveMenu = () => {
           scale: isHovered ? 1.02 : 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="relative z-10 w-[320px] bg-[#1a1a1d] rounded-xl border border-zinc-700/50 shadow-2xl overflow-hidden"
+        className="relative z-10 w-[340px] bg-[#1a1a1d] rounded-xl border border-zinc-700/50 shadow-2xl overflow-hidden"
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Menu Header */}
         <div className="bg-[#141416] px-4 py-3 flex items-center justify-between border-b border-zinc-800">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center ring-2 ring-blue-400/30">
               <span className="text-white font-bold text-xs">I</span>
             </div>
             <span className="text-white font-semibold text-sm">IXLPro</span>
           </div>
           <div className="flex items-center space-x-2">
-            <button className="text-zinc-400 hover:text-white transition-colors">
+            <button className="text-blue-400 hover:text-blue-300 transition-colors">
               <Home className="w-4 h-4" />
             </button>
             <button className="text-zinc-400 hover:text-white transition-colors">
-              <User className="w-4 h-4" />
+              <Settings className="w-4 h-4" />
             </button>
             <button className="text-zinc-400 hover:text-white transition-colors">
-              <Settings className="w-4 h-4" />
+              <User className="w-4 h-4" />
             </button>
           </div>
         </div>
 
         {/* Menu Items */}
-        <div className="p-2 max-h-[350px] overflow-y-auto custom-scrollbar">
+        <div className="p-2 max-h-[380px] overflow-y-auto custom-scrollbar">
           {features.map((feature, index) => (
-            <motion.div
-              key={feature.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              onMouseEnter={() => setHoveredFeature(feature.id)}
-              onMouseLeave={() => setHoveredFeature(null)}
-              onClick={() => toggleFeature(feature.id)}
-              className={`flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 ${
-                hoveredFeature === feature.id 
-                  ? "bg-zinc-800/80" 
-                  : "hover:bg-zinc-800/50"
-              }`}
-            >
-              <div className="flex items-center space-x-3">
-                <feature.icon className={`w-4 h-4 ${feature.enabled ? 'text-blue-400' : 'text-zinc-500'}`} />
-                <span className={`text-sm ${feature.enabled ? 'text-white' : 'text-zinc-400'}`}>
-                  {feature.name}
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Toggle Switch */}
+            <div key={feature.id}>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05 }}
+                onMouseEnter={() => setHoveredFeature(feature.id)}
+                onMouseLeave={() => setHoveredFeature(null)}
+                className={`rounded-lg transition-all duration-200 ${
+                  hoveredFeature === feature.id || expandedSettings === feature.id
+                    ? "bg-zinc-800/80" 
+                    : "hover:bg-zinc-800/50"
+                }`}
+              >
                 <div 
-                  className={`w-8 h-4 rounded-full transition-colors duration-200 relative ${
-                    feature.enabled ? 'bg-blue-500' : 'bg-zinc-700'
-                  }`}
+                  className="flex items-center justify-between px-3 py-2.5 cursor-pointer"
+                  onClick={() => toggleFeature(feature.id)}
                 >
-                  <motion.div
-                    animate={{ x: feature.enabled ? 16 : 2 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    className="absolute top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"
-                  />
+                  <div className="flex items-center space-x-3">
+                    <feature.icon className={`w-4 h-4 ${feature.enabled ? 'text-blue-400' : 'text-zinc-500'}`} />
+                    <span className={`text-sm ${feature.enabled ? 'text-white' : 'text-zinc-400'}`}>
+                      {feature.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {/* Toggle Switch */}
+                    <div 
+                      className={`w-8 h-4 rounded-full transition-colors duration-200 relative ${
+                        feature.enabled ? 'bg-blue-500' : 'bg-zinc-700'
+                      }`}
+                    >
+                      <motion.div
+                        animate={{ x: feature.enabled ? 16 : 2 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        className="absolute top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"
+                      />
+                    </div>
+                    {/* Settings gear - only for features with settings */}
+                    {feature.hasSettings && (
+                      <button 
+                        onClick={(e) => toggleSettings(feature.id, e)}
+                        className={`p-1 rounded transition-colors ${
+                          expandedSettings === feature.id 
+                            ? 'text-blue-400 bg-zinc-700' 
+                            : 'text-zinc-500 hover:text-blue-400'
+                        }`}
+                      >
+                        <Settings className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <Link 
-                  to={`/features#${feature.id}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-zinc-500 hover:text-blue-400 transition-colors"
-                >
-                  <Settings className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </motion.div>
+                
+                {/* Settings Panel */}
+                <AnimatePresence>
+                  {expandedSettings === feature.id && feature.hasSettings && (
+                    <SettingsPanel 
+                      feature={feature} 
+                      onClose={() => setExpandedSettings(null)} 
+                    />
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </div>
           ))}
         </div>
 
