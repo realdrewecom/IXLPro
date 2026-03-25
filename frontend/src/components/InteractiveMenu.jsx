@@ -308,11 +308,16 @@ const InteractiveMenu = () => {
                     {/* Settings gear - only for features with settings */}
                     {feature.hasSettings && (
                       <button 
-                        onClick={(e) => toggleSettings(feature.id, e)}
-                        className={`p-1 rounded transition-colors ${
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleSettings(feature.id, e);
+                        }}
+                        data-testid={`settings-btn-${feature.id}`}
+                        className={`p-1.5 rounded transition-colors z-10 ${
                           expandedSettings === feature.id 
                             ? 'text-blue-400 bg-zinc-700' 
-                            : 'text-zinc-500 hover:text-blue-400'
+                            : 'text-zinc-500 hover:text-blue-400 hover:bg-zinc-700/50'
                         }`}
                       >
                         <Settings className="w-3.5 h-3.5" />
