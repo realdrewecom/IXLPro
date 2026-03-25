@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,13 +18,14 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "Features", href: "#features" },
-    { name: "Purchase", href: "#pricing" },
-    { name: "Reviews", href: "#reviews" },
-    { name: "Download", href: "#setup" },
-    { name: "Troubleshooting", href: "#faq" },
-    { name: "Services", href: "#pricing" },
+    { name: "Features", href: "/features" },
+    { name: "Purchase", href: "/purchase" },
+    { name: "Reviews", href: "/reviews" },
+    { name: "Download", href: "/download" },
+    { name: "Troubleshooting", href: "/troubleshooting" },
   ];
+
+  const isActive = (href) => location.pathname === href;
 
   return (
     <motion.nav
@@ -37,8 +40,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a 
-            href="/" 
+          <Link 
+            to="/" 
             className="flex items-center space-x-2"
             data-testid="logo-link"
           >
@@ -52,19 +55,23 @@ const Navbar = () => {
               <span className="w-2 h-2 rounded-full bg-green-500 pulse-green mr-2"></span>
               <span className="text-xs text-zinc-400">All services are online</span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="text-sm text-zinc-400 hover:text-white transition-colors duration-200"
+                to={link.href}
+                className={`text-sm transition-colors duration-200 ${
+                  isActive(link.href) 
+                    ? "text-white font-medium" 
+                    : "text-zinc-400 hover:text-white"
+                }`}
                 data-testid={`nav-link-${link.name.toLowerCase()}`}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -114,14 +121,18 @@ const Navbar = () => {
           >
             <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  className="text-sm text-zinc-400 hover:text-white transition-colors duration-200 py-2"
+                  to={link.href}
+                  className={`text-sm py-2 transition-colors duration-200 ${
+                    isActive(link.href) 
+                      ? "text-white font-medium" 
+                      : "text-zinc-400 hover:text-white"
+                  }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center space-x-2 pt-3 border-t border-zinc-800">
                 <span className="w-2 h-2 rounded-full bg-green-500 pulse-green"></span>

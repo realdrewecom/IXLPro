@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { MessageSquare, Star, Users } from "lucide-react";
-
-const HERO_MOCKUP_URL = "https://static.prod-images.emergentagent.com/jobs/5ad3d3b7-3d79-4fc4-91a4-b187c2dbc9f2/images/df24647f986c88754e24237936b7ad5f176467f422d68c7f8157a1b5d22d1fb0.png";
+import InteractiveMenu from "./InteractiveMenu";
 
 // Counter animation component
 const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
@@ -118,29 +118,29 @@ const Hero = ({ stats }) => {
               variants={itemVariants}
               className="flex flex-wrap justify-center lg:justify-start gap-4 mb-12"
             >
-              <a
-                href="#reviews"
+              <Link
+                to="/reviews"
                 className="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-6 py-3 rounded-lg transition-all duration-200"
                 data-testid="what-people-say-btn"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>What People Say</span>
-              </a>
-              <a
-                href="#pricing"
+              </Link>
+              <Link
+                to="/purchase"
                 className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg transition-all duration-200 btn-glow"
                 data-testid="get-started-btn"
               >
                 <Star className="w-4 h-4" />
                 <span className="font-medium">Get Started Now</span>
-              </a>
-              <a
-                href="#features"
+              </Link>
+              <Link
+                to="/features"
                 className="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-6 py-3 rounded-lg transition-all duration-200"
                 data-testid="explore-features-btn"
               >
                 <span>Explore Features</span>
-              </a>
+              </Link>
             </motion.div>
 
             {/* Stats */}
@@ -188,24 +188,14 @@ const Hero = ({ stats }) => {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Mockup Image */}
+          {/* Right Column - Interactive Menu */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative hidden lg:block"
+            className="relative hidden lg:flex justify-center items-center"
           >
-            <div className="relative">
-              {/* Glow effect behind image */}
-              <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full transform scale-75" />
-              
-              <img
-                src={HERO_MOCKUP_URL}
-                alt="IXLPro Menu Interface"
-                className="relative z-10 w-full max-w-md mx-auto drop-shadow-2xl"
-                data-testid="hero-mockup"
-              />
-            </div>
+            <InteractiveMenu />
           </motion.div>
         </div>
       </div>

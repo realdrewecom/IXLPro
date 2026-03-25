@@ -1,20 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaDiscord, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const exploreLinks = [
-    { name: "Reviews", href: "#reviews" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "How It Works", href: "#setup" },
-    { name: "Troubleshooting", href: "#faq" },
+    { name: "Reviews", href: "/reviews" },
+    { name: "Pricing", href: "/purchase" },
+    { name: "How It Works", href: "/download" },
+    { name: "Troubleshooting", href: "/troubleshooting" },
   ];
 
   const legalLinks = [
-    { name: "Contact", href: "#contact" },
-    { name: "Terms of Service", href: "#terms" },
-    { name: "Privacy Policy", href: "#privacy" },
+    { name: "Contact", href: "/contact" },
+    { name: "Terms of Service", href: "/terms" },
+    { name: "Privacy Policy", href: "/privacy" },
   ];
 
   const socialLinks = [
@@ -33,11 +34,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
+            <Link to="/" className="flex items-center space-x-2 mb-4">
               <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">I</span>
               </div>
-            </div>
+            </Link>
             <p className="text-zinc-400 text-sm">
               Become an <span className="text-blue-400">IXL</span> Pro with IXLPro!
             </p>
@@ -54,13 +55,13 @@ const Footer = () => {
             <ul className="space-y-3">
               {exploreLinks.map((link) => (
                 <li key={link.name}>
-                  <a 
-                    href={link.href}
+                  <Link 
+                    to={link.href}
                     className="footer-link text-sm"
                     data-testid={`footer-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -77,13 +78,13 @@ const Footer = () => {
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.name}>
-                  <a 
-                    href={link.href}
+                  <Link 
+                    to={link.href}
                     className="footer-link text-sm"
                     data-testid={`footer-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -11,8 +11,15 @@ import Pricing from "./components/Pricing";
 import FAQ from "./components/FAQ";
 import Setup from "./components/Setup";
 import Footer from "./components/Footer";
+
+// Pages
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
+import FeaturesPage from "./pages/FeaturesPage";
+import PurchasePage from "./pages/PurchasePage";
+import ReviewsPage from "./pages/ReviewsPage";
+import DownloadPage from "./pages/DownloadPage";
+import TroubleshootingPage from "./pages/TroubleshootingPage";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -63,6 +70,11 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/purchase" element={<PurchasePage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/download" element={<DownloadPage />} />
+          <Route path="/troubleshooting" element={<TroubleshootingPage />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/payment/cancel" element={<PaymentCancel />} />
         </Routes>
