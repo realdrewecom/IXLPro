@@ -1,0 +1,84 @@
+{
+  "project_name": "IXLPro",
+  "theme": "dark",
+  "archetype": "7 (Electric & Neon)",
+  "rationale": "SaaS tool providing auto-solver/bot functionality for IXL. Needs a high-tech, slightly underground, 'Discord-hacker' aesthetic but highly polished. Deep dark mode with neon blue accents perfectly matches the requested EdgyPro 1:1 replica style.",
+  "colors": {
+    "background": {
+      "main": "#09090b",
+      "card": "#18181b",
+      "glass": "rgba(24, 24, 27, 0.7)",
+      "discord_card": "#2B2D31"
+    },
+    "primary": {
+      "main": "#3b82f6",
+      "glow": "rgba(59, 130, 246, 0.5)",
+      "gradient_start": "#60a5fa",
+      "gradient_end": "#2563eb",
+      "cta_text": "#ffffff"
+    },
+    "text": {
+      "primary": "#f4f4f5",
+      "secondary": "#a1a1aa",
+      "muted": "#71717a"
+    }
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Outfit, sans-serif",
+      "weights": ["600", "700", "800"],
+      "tracking": "tracking-tight"
+    },
+    "body": {
+      "font_family": "IBM Plex Sans, sans-serif",
+      "weights": ["400", "500"]
+    }
+  },
+  "spacing_and_layout": {
+    "general": "Generous spacing. Use py-24 for main sections. Max-width 7xl (max-w-7xl) container for content.",
+    "bento_grid": "Used in the features/pricing section. gap-6 between cards. Cards should have hover effects (-translate-y-1, ring-1 ring-blue-500/50, shadow-[0_0_20px_rgba(59,130,246,0.1)]).",
+    "glassmorphism": "Use backdrop-blur-xl bg-zinc-950/70 border-b border-zinc-800 for the sticky navbar."
+  },
+  "components": {
+    "navbar": "Sticky header (z-50). Left: Logo 'IXLPro' (Blue text). Center: Links (Features, Purchase, Reviews, Download, Troubleshooting, Services). Right: Trustpilot rating (Stars) and 'All services are online' green dot badge. Glassmorphism bg.",
+    "hero": "H1 text-5xl md:text-6xl+ font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600. Animated stats (Users, Questions Answered, Discord Members) using framer-motion. Floating hero mockup image on the right side.",
+    "pricing": "Grid cols 1 md:cols-2 lg:cols-3. 6 tiers: Day Key ($2.50), Week Key ($10), Month Key ($25), 3 Month Key ($50), Year Key ($100), Service Key ($120). Include badges like 'Most Popular', 'Best Value'. Cards have 1px solid border-zinc-800, glowing blue border on hover. 'Purchase' buttons.",
+    "reviews": "react-fast-marquee. Discord message style. bg-[#2B2D31] rounded-md p-4, avatar on left, Username (white) and timestamp (gray text-xs) on top, message below (gray-300). Authentic Discord look.",
+    "faq": "Shadcn accordion. Dark theme (bg-zinc-900 border-zinc-800).",
+    "setup_download": "Two tabs (Desktop / Mobile). Video thumbnail centered. Blue glowing play button overlay.",
+    "footer": "Links grid, social icons (Discord, Twitter). Divider border-zinc-800."
+  },
+  "animations": {
+    "hover": "All cards and buttons must scale slightly (scale-105 for primary buttons, -translate-y-1 for cards) and increase glow/shadow.",
+    "entrance": "Framer motion staggered fade-in up (y: 20, opacity: 0) for hero and pricing grids.",
+    "stats": "Number counter animation from 0 to target (e.g. 50,000+ Users)."
+  },
+  "media_and_images": {
+    "hero_mockup": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/5ad3d3b7-3d79-4fc4-91a4-b187c2dbc9f2/images/df24647f986c88754e24237936b7ad5f176467f422d68c7f8157a1b5d22d1fb0.png",
+      "description": "Floating menu mockup showing IXLPro features"
+    },
+    "setup_video_thumbnail": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/5ad3d3b7-3d79-4fc4-91a4-b187c2dbc9f2/images/5cdce712ba1b7bd2b8c725729a3e28fa3330d0df531d95018101a9bdcfc6d2d4.png",
+      "description": "Video thumbnail for the setup tutorial"
+    },
+    "avatars": [
+      "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1569913486515-b74bf7751574?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1520283818086-3f6dffb019c0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBhdmF0YXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzQ0NzY2Nzd8MA&ixlib=rb-4.1.0&q=85",
+      "https://images.pexels.com/photos/2233508/pexels-photo-2233508.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "REPLACE ALL instances of 'Edgenuity' with 'IXL' and 'EdgyPro' with 'IXLPro'.",
+    "Install and use `lucide-react` and `react-icons` (for Discord, Trustpilot star icons).",
+    "Install `react-fast-marquee` for the review carousel. The cards MUST look identical to Discord messages (bg-[#2B2D31], rounded-md, avatar, username, timestamp, gray text).",
+    "Build the 6 Pricing tiers explicitly as per instructions: Day Key ($2.50), Week Key ($10), Month Key ($25), 3 Month Key ($50), Year Key ($100), Service Key ($120).",
+    "Implement Framer Motion for count-up numbers in the hero section.",
+    "Add a 'Status: All services are online' green pulsing indicator in the header.",
+    "Ensure the hero image uses the provided mockup URL.",
+    "Add data-testid attributes to all buttons, links, accordion triggers, and form inputs (e.g., data-testid='purchase-button-day-key').",
+    "Do NOT use generic grey for backgrounds. Use tinted zinc (e.g. zinc-950, zinc-900).",
+    "Use 'Outfit' for headings and 'IBM Plex Sans' for body text. Apply them directly in Tailwind classes."
+  ]
+}
