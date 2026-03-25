@@ -1,0 +1,151 @@
+{
+  "summary": {
+    "tests_run": 7,
+    "tests_passed": 7,
+    "success_rate": 100.0,
+    "timestamp": "2026-03-25T22:21:16.484048"
+  },
+  "detailed_results": [
+    {
+      "test_name": "API Root",
+      "endpoint": "",
+      "method": "GET",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.041449,
+      "timestamp": "2026-03-25T22:21:15.025940",
+      "response_data": {
+        "message": "IXLPro API v1.0"
+      }
+    },
+    {
+      "test_name": "Health Check",
+      "endpoint": "health",
+      "method": "GET",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.121028,
+      "timestamp": "2026-03-25T22:21:15.148336",
+      "response_data": {
+        "status": "healthy",
+        "services": "online"
+      }
+    },
+    {
+      "test_name": "Stats Endpoint",
+      "endpoint": "stats",
+      "method": "GET",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.101977,
+      "timestamp": "2026-03-25T22:21:15.251728",
+      "response_data": {
+        "users": 6360,
+        "questions_answered": 268976645,
+        "discord_members": 54492
+      }
+    },
+    {
+      "test_name": "Pricing Endpoint",
+      "endpoint": "pricing",
+      "method": "GET",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.119117,
+      "timestamp": "2026-03-25T22:21:15.374136",
+      "response_data": {
+        "plans": {
+          "day_key": {
+            "name": "Day Key",
+            "price": 2.5,
+            "duration_days": 1,
+            "badge": "Most Affordable",
+            "description": "Perfect for quick access and trying us out with minimal cost."
+          },
+          "week_key": {
+            "name": "Week Key",
+            "price": 10.0,
+            "duration_days": 7,
+            "badge": "Trial Pack",
+            "description": "Extend your access and save compared to Day Keys."
+          },
+          "month_key": {
+            "name": "Month Key",
+            "price": 25.0,
+            "duration_days": 30,
+            "badge": "Most Popular",
+            "description": "Best for regular users who want to enjoy uninterrupted access."
+          },
+          "3_month_key": {
+            "name": "3 Month Key",
+            "price": 50.0,
+            "duration_days": 90,
+            "badge": "Semester Pack",
+            "description": "Great for long-term projects or consistent use over months."
+          },
+          "year_key": {
+            "name": "Year Key",
+            "price": 100.0,
+            "duration_days": 365,
+            "badge": "Best Value",
+            "description": "Enjoy uninterrupted access and save more with an annual plan."
+          },
+          "service_key": {
+            "name": "Service Key",
+            "price": 120.0,
+            "duration_days": 365,
+            "badge": "Bulk Savings",
+            "description": "Perfect for business needs or sharing access across users."
+          }
+        }
+      }
+    },
+    {
+      "test_name": "Checkout Create",
+      "endpoint": "checkout/create",
+      "method": "POST",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.848124,
+      "timestamp": "2026-03-25T22:21:16.223720",
+      "response_data": {
+        "url": "https://checkout.stripe.com/c/pay/cs_test_a1y6NnULbrBXQy1i6ZYtnYHQBxIOQAu3AVDTCU98v08P433VKfm4EZKspc#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0V2xNTENDfzdyMWhcSU5%2Fam5DVlBQfVF3ZHN%2FSWl1NG1fcUFid3BpN01sfHcwVzJfRmhrfURAaD1PQjd9cEM8TEQzaU0yTXNcb3BrY3U2PH9GUXRQVmNINTVJbHREckN3NCcpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl",
+        "session_id": "cs_test_a1y6NnULbrBXQy1i6ZYtnYHQBxIOQAu3AVDTCU98v08P433VKfm4EZKspc"
+      }
+    },
+    {
+      "test_name": "Checkout Invalid Plan",
+      "endpoint": "checkout/create",
+      "method": "POST",
+      "expected_status": 400,
+      "actual_status": 400,
+      "success": true,
+      "response_time": 0.136194,
+      "timestamp": "2026-03-25T22:21:16.361290",
+      "response_data": {
+        "detail": "Invalid plan selected"
+      }
+    },
+    {
+      "test_name": "Validate Invalid Key",
+      "endpoint": "validate-key",
+      "method": "POST",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_time": 0.119174,
+      "timestamp": "2026-03-25T22:21:16.483032",
+      "response_data": {
+        "valid": false,
+        "message": "Invalid license key",
+        "plan_name": null,
+        "expires_at": null
+      }
+    }
+  ]
+}
