@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaDiscord, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa";
+import IXLProLogo from "./IXLProLogo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -35,9 +36,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">I</span>
-              </div>
+              <IXLProLogo size={40} />
             </Link>
             <p className="text-zinc-400 text-sm">
               Become an <span className="text-blue-400">IXL</span> Pro with IXLPro!

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MessageSquare, Star, Users } from "lucide-react";
 import InteractiveMenu from "./InteractiveMenu";
@@ -15,7 +15,7 @@ const typingPhrases = [
   "Beat any deadline with",
 ];
 
-// Animated typing component
+// Animated typing component - no cursor, smaller font, 5 second interval
 const TypewriterText = () => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
@@ -28,13 +28,13 @@ const TypewriterText = () => {
       if (displayedText.length < phrase.length) {
         const timeout = setTimeout(() => {
           setDisplayedText(phrase.slice(0, displayedText.length + 1));
-        }, 30); // Fast typing speed
+        }, 25); // Fast typing speed
         return () => clearTimeout(timeout);
       } else {
-        // Finished typing, wait 4 seconds then switch
+        // Finished typing, wait 5 seconds then switch
         const timeout = setTimeout(() => {
           setIsTyping(false);
-        }, 4000);
+        }, 5000);
         return () => clearTimeout(timeout);
       }
     } else {
@@ -46,9 +46,8 @@ const TypewriterText = () => {
   }, [displayedText, isTyping, currentPhraseIndex]);
 
   return (
-    <span className="inline-block min-w-[280px] sm:min-w-[400px]">
+    <span className="inline-block">
       {displayedText}
-      <span className="animate-pulse text-blue-400">|</span>
     </span>
   );
 };
@@ -176,12 +175,12 @@ const Hero = ({ stats }) => {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-6 whitespace-nowrap"
               style={{ fontFamily: 'Outfit, sans-serif' }}
             >
               <TypewriterText />{" "}
               <motion.span 
-                className="text-gradient inline-block"
+                className="text-gradient inline-block ml-1"
                 layout
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >

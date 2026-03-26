@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
+import IXLProLogo from "./IXLProLogo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,9 +46,7 @@ const Navbar = () => {
             className="flex items-center space-x-2"
             data-testid="logo-link"
           >
-            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">I</span>
-            </div>
+            <IXLProLogo size={32} />
             <span className="text-xl font-bold text-blue-500" style={{ fontFamily: 'Outfit, sans-serif' }}>
               IXLPro
             </span>

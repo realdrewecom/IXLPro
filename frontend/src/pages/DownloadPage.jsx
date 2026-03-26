@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import IXLProLogo from "../components/IXLProLogo";
 import { Download, ExternalLink } from "lucide-react";
 
 const DownloadPage = () => {
@@ -18,9 +19,7 @@ const DownloadPage = () => {
             transition={{ duration: 0.5 }}
             className="flex justify-center mb-8"
           >
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <span className="text-white font-bold text-3xl" style={{ fontFamily: 'Outfit, sans-serif' }}>I</span>
-            </div>
+            <IXLProLogo size={80} />
           </motion.div>
 
           {/* Download Button */}
